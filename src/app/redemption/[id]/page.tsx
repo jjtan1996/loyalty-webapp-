@@ -20,11 +20,12 @@ export default function RedemptionPage() {
   useEffect(() => {
     const fetchRedemption = async () => {
       const { data, error } = await supabase
-        .from<Redemption>("redemptions")
+            // FIX: Removed <Redemption>
+        .from("redemptions")
         .select("*")
         .eq("id", params.id)
+        
         .single();
-
       if (error || !data) {
         alert("Redemption not found.");
         router.push("/dashboard");
