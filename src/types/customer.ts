@@ -6,5 +6,7 @@ export type CustomerRow = {
     points: number;
     contactNumber?: string;
     birthday?: string;
+    first_name?:string;
+    last_name?:string;
   };
   

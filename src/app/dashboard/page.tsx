@@ -23,11 +23,12 @@ export default function Dashboard() {
 
       const email = user.email;
 
+      // Original logic, but with the fix
       const { data: existingCustomer } = await supabase
-        .from<CustomerRow>("customers")
+        .from("customers") // Removed <CustomerRow>
         .select("*")
         .eq("email", email)
-        .single() as { data: CustomerRow | null; error: any };
+        .single() as { data: CustomerRow | null; error: any }; // Type is applied here
 
       if (!existingCustomer) {
         router.push("/customer-details");
@@ -49,7 +50,8 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchPromotions = async () => {
       const { data, error } = await supabase
-        .from<Promotion>("promotions")
+        // FIX: Removed <Promotion>
+        .from("promotions")
         .select("*")
         .eq("active", true);
 
