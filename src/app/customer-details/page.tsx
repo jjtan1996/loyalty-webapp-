@@ -27,16 +27,16 @@ export default function CustomerDetails() {
       const email = user.email;
 
       const { data: existingCustomer, error: fetchError } = await supabase
-        .from<CustomerRow>("customers")
-        .select("*")
-        .eq("email", email)
-        .single() as { data: CustomerRow | null; error: any };
+          .from("customers") // FIX: Removed <CustomerRow>
+          .select("*")
+          .eq("email", email)
+          .single() as { data: CustomerRow | null; error: any };
 
       if (fetchError) console.error("Error fetching customer:", fetchError);
 
       if (!existingCustomer) {
         const { data: newCustomer, error: insertError } = await supabase
-          .from<CustomerRow>("customers")
+          .from("customers") // FIX: Removed <CustomerRow>
           .insert({ email, points: 0 })
           .select()
           .single() as { data: CustomerRow | null; error: any };
@@ -67,7 +67,7 @@ export default function CustomerDetails() {
     setUpdating(true);
 
     const { data, error } = await supabase
-      .from<CustomerRow>("customers")
+      .from("customers") // FIX: Removed <CustomerRow>
       .update({
         first_name: firstName,
         last_name: lastName,
